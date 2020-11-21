@@ -1,0 +1,7 @@
+#replace "List Records" action name with "Get records" action name
+
+
+.\psreplace.ps1 -solutionPath "c:\work\temp\psreplace\ources\FlowActionNameChange_1_0_0_1.zip" -regex "List records" -replaceWith "Get records" -outputSolutionPath "c:\work\temp\psreplace\sources\UPDATEDFlowActionNameChange_1_0_0_1.zip"
+
+.\psreplace.ps1 -solutionPath "c:\work\temp\psreplace\sources\UPDATEDFlowActionNameChange_1_0_0_1.zip" -regex "List_records" -replaceWith "Get_records" -outputSolutionPath "c:\work\temp\psreplace\sources\UPDATEDFlowActionNameChange_1_0_0_1.zip"
+
