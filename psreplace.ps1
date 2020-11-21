@@ -7,6 +7,8 @@ param([string] $solutionPath,
 $solutionPackagerPath = ".\PSModules\Tools\CoreTools\SolutionPackager.exe"
 $toolsVersion = "9.1.0.49"
 
+
+
 function replaceInFile($file, $regex, $replaceWith)
 {
    $content = Get-Content $file -Encoding:utf8
@@ -57,13 +59,16 @@ if (Test-Path -Path ".\tempSolution")
 {
     Remove-Item ".\tempSolution" -Recurse
 }
+
+Set-Alias -Name solutionPackager -Value $solutionPackagerPath -Scope Global 
+
 Write-Host "Extracting..."
-Start-Process -FilePath "$solutionPackagerPath" -Wait  -ArgumentList " /action:Extract /folder:tempSolution  /zipfile:`"$solutionPath`""
+solutionPackager  /action:Extract /folder:tempSolution  /zipfile:"$solutionPath"
 Write-Host "Processing..."
 Get-ChildItem -Path ".\tempSolution" -File -Recurse | % { replaceInFile $_.FullName $regex $replaceWith} 
 Write-Host "Packing..."
-Start-Process -FilePath "$solutionPackagerPath" -Wait  -ArgumentList " /action:Pack /folder:tempSolution  /zipfile:`"$outputSolutionPath`""
-    
+solutionPackager /action:Pack /folder:tempSolution  /zipfile:"$outputSolutionPath"
+Remove-Item .\tempSolution -Force -Recurse
    
    
 
